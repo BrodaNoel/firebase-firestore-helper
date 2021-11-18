@@ -105,15 +105,20 @@ const getBy =
 
     const snapshot = await query.get();
 
-    const objects = snapshot.map(doc => doc.data());
+    const data = [];
 
     if (useCache) {
-      objects.forEach(object => {
-        cache[entity][object.id] = object;
+      snapshot.forEach(doc => {
+        cache[entity][doc.id] = doc.data();
+        data.push(cache[entity][doc.id]);
+      });
+    } else {
+      snapshot.forEach(doc => {
+        data.push(doc.data());
       });
     }
 
-    return objects;
+    return data;
   };
 
 /**
@@ -131,7 +136,12 @@ const getAll =
 
       return cache[entity];
     } else {
-      return snapshot.map(doc => doc.data());
+      const data = [];
+      snapshot.forEach(doc => {
+        data.push(doc.data());
+      });
+
+      return data;
     }
   };
 
