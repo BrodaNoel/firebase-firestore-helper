@@ -1,5 +1,7 @@
 import { firestore } from 'firebase-admin';
 
+// DB HELPER
+
 /**
  * {
  *   users: {
@@ -181,5 +183,47 @@ export const helperCreator = ({ entity, useCache = true }) => {
     removeById: removeById({ entity, useCache }),
     editById: editById({ entity, useCache }),
     clearCache: clearCache({ entity }),
+  };
+};
+
+// ACTIONS HELPER
+
+const actionAdd = db => data => {
+  return db.add(data);
+};
+
+const actionGetBy = db => params => {
+  return db.getBy(params);
+};
+
+const actionGetById = db => id => {
+  return db.getById(id);
+};
+
+const actionGetAll = db => () => {
+  return db.getAll();
+};
+
+const actionRemoveById = db => id => {
+  return db.removeById(id);
+};
+
+const actionEditById = db => (id, newData) => {
+  return db.editById(id, newData);
+};
+
+const actionClearCache = db => key => {
+  return db.clearCache(key);
+};
+
+export const actionsHelperCreator = db => {
+  return {
+    add: actionAdd(db),
+    getBy: actionGetBy(db),
+    getById: actionGetById(db),
+    getAll: actionGetAll(db),
+    removeById: actionRemoveById(db),
+    editById: actionEditById(db),
+    clearCache: actionClearCache(db),
   };
 };
