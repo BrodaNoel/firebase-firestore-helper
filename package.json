@@ -1,10 +1,11 @@
 {
   "name": "firebase-firestore-helper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Firebase Firestore Helper",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup src/index.js --file build/index.js --format umd --name \"firebase-firestore-helper\""
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,8 @@
   "homepage": "https://github.com/BrodaNoel/firebase-firestore-helper#readme",
   "peerDependencies": {
     "firebase-admin": "^8.0.0"
+  },
+  "devDependencies": {
+    "rollup": "^2.60.0"
   }
 }
