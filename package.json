@@ -1,0 +1,31 @@
+{
+  "name": "firebase-firestore-helper",
+  "version": "0.0.1",
+  "description": "Firebase Firestore Helper",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrodaNoel/firebase-firestore-helper.git"
+  },
+  "keywords": [
+    "firebase",
+    "firestore",
+    "helper",
+    "db",
+    "database",
+    "actions",
+    "nosql"
+  ],
+  "author": "Broda Noel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BrodaNoel/firebase-firestore-helper/issues"
+  },
+  "homepage": "https://github.com/BrodaNoel/firebase-firestore-helper#readme",
+  "peerDependencies": {
+    "firebase-admin": "^8.0.0"
+  }
+}
