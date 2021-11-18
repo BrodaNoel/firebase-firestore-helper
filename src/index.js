@@ -18,11 +18,16 @@ const add =
       throw new Error("'id' is required");
     }
 
-    await firestore().collection(entity).doc(data.id).set(data);
+    const response = await firestore()
+      .collection(entity)
+      .doc(data.id)
+      .set(data);
 
     if (useCache) {
       cache[entity][data.id] = data;
     }
+
+    return response;
   };
 
 const getById =
@@ -148,17 +153,22 @@ const getAll =
 const removeById =
   ({ entity, useCache }) =>
   async id => {
-    await firestore().collection(entity).doc(id).delete();
+    const response = await firestore().collection(entity).doc(id).delete();
 
     if (useCache) {
       cache[entity][id] = undefined;
     }
+
+    return response;
   };
 
 const editById =
   ({ entity, useCache }) =>
   async (id, newData) => {
-    await firestore().collection(entity).doc(id).update(newData);
+    const response = await firestore()
+      .collection(entity)
+      .doc(id)
+      .update(newData);
 
     // TODO: Maybe updating the object in the cache?
     // if (useCache) {
@@ -168,6 +178,8 @@ const editById =
     if (useCache) {
       delete cache[entity][id];
     }
+
+    return response;
   };
 
 const clearCache =

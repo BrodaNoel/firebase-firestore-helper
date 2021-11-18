@@ -22,11 +22,16 @@
         throw new Error("'id' is required");
       }
 
-      await firebaseAdmin.firestore().collection(entity).doc(data.id).set(data);
+      const response = await firebaseAdmin.firestore()
+        .collection(entity)
+        .doc(data.id)
+        .set(data);
 
       if (useCache) {
         cache[entity][data.id] = data;
       }
+
+      return response;
     };
 
   const getById =
@@ -152,17 +157,22 @@
   const removeById =
     ({ entity, useCache }) =>
     async id => {
-      await firebaseAdmin.firestore().collection(entity).doc(id).delete();
+      const response = await firebaseAdmin.firestore().collection(entity).doc(id).delete();
 
       if (useCache) {
         cache[entity][id] = undefined;
       }
+
+      return response;
     };
 
   const editById =
     ({ entity, useCache }) =>
     async (id, newData) => {
-      await firebaseAdmin.firestore().collection(entity).doc(id).update(newData);
+      const response = await firebaseAdmin.firestore()
+        .collection(entity)
+        .doc(id)
+        .update(newData);
 
       // TODO: Maybe updating the object in the cache?
       // if (useCache) {
@@ -172,6 +182,8 @@
       if (useCache) {
         delete cache[entity][id];
       }
+
+      return response;
     };
 
   const clearCache =
