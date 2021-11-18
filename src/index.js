@@ -62,7 +62,7 @@ const getById =
  */
 const getBy =
   ({ entity, useCache }) =>
-  params => {
+  async params => {
     let query = firestore().collection(entity);
 
     if (params.where) {
