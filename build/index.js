@@ -85,7 +85,7 @@
         } else {
           // { user: 3, isVisible: true }
           Object.keys(params.where).forEach(key => {
-            query = query.where(key, '=', condition[key]);
+            query = query.where(key, '=', params.where[key]);
           });
         }
       }
