@@ -150,7 +150,7 @@ const getAll =
     }
   };
 
-const removeById =
+const deleteById =
   ({ entity, useCache }) =>
   async id => {
     const response = await firestore().collection(entity).doc(id).delete();
@@ -202,7 +202,7 @@ export const helperCreator = ({ entity, useCache = true }) => {
     getBy: getBy({ entity, useCache }),
     getById: getById({ entity, useCache }),
     getAll: getAll({ entity, useCache }),
-    removeById: removeById({ entity, useCache }),
+    deleteById: deleteById({ entity, useCache }),
     editById: editById({ entity, useCache }),
     clearCache: clearCache({ entity }),
   };
@@ -226,8 +226,8 @@ const actionGetAll = db => () => {
   return db.getAll();
 };
 
-const actionRemoveById = db => id => {
-  return db.removeById(id);
+const actionDeleteById = db => id => {
+  return db.deleteById(id);
 };
 
 const actionEditById = db => (id, newData) => {
@@ -244,7 +244,7 @@ export const actionsHelperCreator = db => {
     getBy: actionGetBy(db),
     getById: actionGetById(db),
     getAll: actionGetAll(db),
-    removeById: actionRemoveById(db),
+    deleteById: actionDeleteById(db),
     editById: actionEditById(db),
     clearCache: actionClearCache(db),
   };
