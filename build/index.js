@@ -127,7 +127,17 @@
         });
       }
 
-      return data;
+      if (params.limit === 1) {
+        if (data.length === 1) {
+          return data[0];
+        } else if (data.length === 0) {
+          return null;
+        } else {
+          return data;
+        }
+      } else {
+        return data;
+      }
     };
 
   /**
