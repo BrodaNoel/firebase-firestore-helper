@@ -153,7 +153,7 @@
           cache[entity][doc.id] = doc.data();
         });
 
-        return cache[entity];
+        return Object.values(cache[entity]);
       } else {
         const data = [];
         snapshot.forEach(doc => {
