@@ -91,17 +91,21 @@ const getBy =
       }
     }
 
-    // { orderBy: [['user', 'desc'], ['createdAt', 'asc']] }
     if (params.orderBy) {
-      if (!Array.isArray(params.orderBy)) {
-        throw new Error(
-          "params.orderBy should be an array like:[['user', 'desc'], ['createdAt', 'asc']]"
-        );
+      if (typeof params.orderBy === 'string') {
+        // { orderBy: 'createdAt' }
+        query = query.orderBy(params.orderBy);
+      } else if (Array.isArray(params.orderBy)) {
+        // { orderBy: ['createdAt', 'asc'] }
+        if (typeof params.orderBy[0] === 'string') {
+          query = query.orderBy(...params.orderBy);
+        } else if (Array.isArray(params.orderBy)) {
+          // { orderBy: [['user', 'desc'], ['createdAt', 'asc']] }
+          params.orderBy.forEach(x => {
+            query = query.orderBy(...x);
+          });
+        }
       }
-
-      params.orderBy.forEach(x => {
-        query = query.orderBy(...x);
-      });
     }
 
     if (params.limit) {
