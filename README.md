@@ -116,7 +116,61 @@ module.exports = app => {
   app.post('/v1/user/edit', edit);
 ```
 
-## Functions
+## Creator Functions
+
+These are the functions exposed by `firebase-firestore-helper`.
+
+### `helperCreator({ entity, useCache })`
+
+This should be used in the `db` files.
+
+- `entity` is the collection name.
+- `useCache` is `true` by default. It will create a local cache. Very dangerous if you are editing `users` collection from another side, with no using this library.
+
+Example:
+
+```js
+// db/users.js
+const { helperCreator } = require('firebase-firestore-helper');
+
+// This will expouse all the functions of this library (check functions documentation)
+module.exports = {
+  ...helperCreator({
+    entity: 'users',
+    // `useCache` is `true` BY DEFAULT!!!
+    useCache: true,
+  }),
+};
+```
+
+### `actionsHelperCreator(db)`
+
+This should be used in the `actions` files.
+
+Receives only 1 parameter. The DB object created in the `db` file.
+
+Example:
+
+```js
+// actions/users.js
+const { actionsHelperCreator } = require('firebase-firestore-helper');
+const db = require('../db/users');
+
+const login = async (email, password) => {
+  const user = await db.getBy({ where: { email }, limit: 1 });
+
+  if (!user || user.password !== password) {
+    // ...
+  }
+};
+
+module.exports = {
+  ...actionsHelperCreator(db),
+  login,
+};
+```
+
+## Firestore Functions (`db` object)
 
 ### `add()`
 
