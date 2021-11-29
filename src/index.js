@@ -1,5 +1,7 @@
 import { firestore } from 'firebase-admin';
 
+const clone = o => JSON.parse(JSON.stringify(o));
+
 // DB HELPER
 
 /**
@@ -34,7 +36,7 @@ const getById =
   ({ entity, useCache }) =>
   async id => {
     if (useCache && cache[entity].hasOwnProperty(id)) {
-      return cache[entity][id];
+      return clone(cache[entity][id]);
     }
 
     const doc = await firestore().collection(entity).doc(id).get();

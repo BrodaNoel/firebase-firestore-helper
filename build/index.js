@@ -4,6 +4,8 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["firebase-firestore-helper"] = {}, global.firebaseAdmin));
 })(this, (function (exports, firebaseAdmin) { 'use strict';
 
+  const clone = o => JSON.parse(JSON.stringify(o));
+
   // DB HELPER
 
   /**
@@ -38,7 +40,7 @@
     ({ entity, useCache }) =>
     async id => {
       if (useCache && cache[entity].hasOwnProperty(id)) {
-        return cache[entity][id];
+        return clone(cache[entity][id]);
       }
 
       const doc = await firebaseAdmin.firestore().collection(entity).doc(id).get();
