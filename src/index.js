@@ -1,6 +1,12 @@
 import { firestore } from 'firebase-admin';
 
-const clone = o => JSON.parse(JSON.stringify(o));
+const clone = o => {
+  try {
+    return JSON.parse(JSON.stringify(o));
+  } catch (error) {
+    return o;
+  }
+};
 
 // DB HELPER
 

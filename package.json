@@ -1,6 +1,6 @@
 {
   "name": "firebase-firestore-helper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Firebase Firestore Helper",
   "main": "build/index.js",
   "scripts": {

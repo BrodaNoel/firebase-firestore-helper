@@ -4,7 +4,13 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["firebase-firestore-helper"] = {}, global.firebaseAdmin));
 })(this, (function (exports, firebaseAdmin) { 'use strict';
 
-  const clone = o => JSON.parse(JSON.stringify(o));
+  const clone = o => {
+    try {
+      return JSON.parse(JSON.stringify(o));
+    } catch (error) {
+      return o;
+    }
+  };
 
   // DB HELPER
 
