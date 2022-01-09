@@ -1,5 +1,12 @@
 # Firebase Firestore Helper
 
+## Supports
+
+- `firebase-firestore-helper@^1.0.0` supports `firebase-admin@^8.0.0`
+- `firebase-firestore-helper@^2.0.0` supports `firebase-admin@^9.0.0`
+
+## How to use it
+
 When `.add` function is called, it **must** receive an `id` inside the object to save, which is the one is going to be used as document id.
 
 We recommend to use an `string` as ID (usually `uuid/v4`)
