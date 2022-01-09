@@ -1,8 +1,10 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('firebase-admin')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'firebase-admin'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["firebase-firestore-helper"] = {}, global.firebaseAdmin));
-})(this, (function (exports, firebaseAdmin) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('firebase-admin/firestore')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'firebase-admin/firestore'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["firebase-firestore-helper"] = {}, global.firestore$1));
+})(this, (function (exports, firestore$1) { 'use strict';
+
+  const firestore = firestore$1.getFirestore();
 
   const clone = o => {
     try {
@@ -30,10 +32,7 @@
         throw new Error("'id' is required");
       }
 
-      const response = await firebaseAdmin.firestore()
-        .collection(entity)
-        .doc(data.id)
-        .set(data);
+      const response = await firestore.collection(entity).doc(data.id).set(data);
 
       if (useCache) {
         cache[entity][data.id] = data;
@@ -49,7 +48,7 @@
         return clone(cache[entity][id]);
       }
 
-      const doc = await firebaseAdmin.firestore().collection(entity).doc(id).get();
+      const doc = await firestore.collection(entity).doc(id).get();
       const data = doc.exists ? doc.data() : undefined;
 
       if (useCache) {
@@ -80,7 +79,7 @@
   const getBy =
     ({ entity, useCache }) =>
     async params => {
-      let query = firebaseAdmin.firestore().collection(entity);
+      let query = firestore.collection(entity);
 
       if (params.where) {
         if (Array.isArray(params.where)) {
@@ -158,7 +157,7 @@
   const getAll =
     ({ entity, useCache }) =>
     async () => {
-      const snapshot = await firebaseAdmin.firestore().collection(entity).get();
+      const snapshot = await firestore.collection(entity).get();
 
       if (useCache) {
         snapshot.forEach(doc => {
@@ -179,7 +178,7 @@
   const deleteById =
     ({ entity, useCache }) =>
     async id => {
-      const response = await firebaseAdmin.firestore().collection(entity).doc(id).delete();
+      const response = await firestore.collection(entity).doc(id).delete();
 
       if (useCache) {
         cache[entity][id] = undefined;
@@ -191,10 +190,7 @@
   const editById =
     ({ entity, useCache }) =>
     async (id, newData) => {
-      const response = await firebaseAdmin.firestore()
-        .collection(entity)
-        .doc(id)
-        .update(newData);
+      const response = await firestore.collection(entity).doc(id).update(newData);
 
       // TODO: Maybe updating the object in the cache?
       // if (useCache) {

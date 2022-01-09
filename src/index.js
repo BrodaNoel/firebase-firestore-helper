@@ -1,4 +1,5 @@
-import { firestore } from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore';
+const firestore = getFirestore();
 
 const clone = o => {
   try {
@@ -26,10 +27,7 @@ const add =
       throw new Error("'id' is required");
     }
 
-    const response = await firestore()
-      .collection(entity)
-      .doc(data.id)
-      .set(data);
+    const response = await firestore.collection(entity).doc(data.id).set(data);
 
     if (useCache) {
       cache[entity][data.id] = data;
@@ -45,7 +43,7 @@ const getById =
       return clone(cache[entity][id]);
     }
 
-    const doc = await firestore().collection(entity).doc(id).get();
+    const doc = await firestore.collection(entity).doc(id).get();
     const data = doc.exists ? doc.data() : undefined;
 
     if (useCache) {
@@ -76,7 +74,7 @@ const getById =
 const getBy =
   ({ entity, useCache }) =>
   async params => {
-    let query = firestore().collection(entity);
+    let query = firestore.collection(entity);
 
     if (params.where) {
       if (Array.isArray(params.where)) {
@@ -154,7 +152,7 @@ const getBy =
 const getAll =
   ({ entity, useCache }) =>
   async () => {
-    const snapshot = await firestore().collection(entity).get();
+    const snapshot = await firestore.collection(entity).get();
 
     if (useCache) {
       snapshot.forEach(doc => {
@@ -175,7 +173,7 @@ const getAll =
 const deleteById =
   ({ entity, useCache }) =>
   async id => {
-    const response = await firestore().collection(entity).doc(id).delete();
+    const response = await firestore.collection(entity).doc(id).delete();
 
     if (useCache) {
       cache[entity][id] = undefined;
@@ -187,10 +185,7 @@ const deleteById =
 const editById =
   ({ entity, useCache }) =>
   async (id, newData) => {
-    const response = await firestore()
-      .collection(entity)
-      .doc(id)
-      .update(newData);
+    const response = await firestore.collection(entity).doc(id).update(newData);
 
     // TODO: Maybe updating the object in the cache?
     // if (useCache) {
