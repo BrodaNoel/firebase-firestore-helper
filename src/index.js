@@ -3,6 +3,10 @@ const firestore = getFirestore();
 
 const clone = o => {
   try {
+    if (o === undefined) {
+      return undefined;
+    }
+
     return JSON.parse(JSON.stringify(o));
   } catch (error) {
     return o;
