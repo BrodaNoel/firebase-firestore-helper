@@ -39,7 +39,7 @@
       const response = await firestore.collection(entity).doc(data.id).set(data);
 
       if (useCache) {
-        cache[entity][data.id] = data;
+        cache[entity][data.id] = clone(data);
       }
 
       return response;
@@ -56,7 +56,7 @@
       const data = doc.exists ? doc.data() : undefined;
 
       if (useCache) {
-        cache[entity][id] = data;
+        cache[entity][id] = clone(data);
       }
 
       return data;
@@ -133,7 +133,7 @@
 
       if (useCache) {
         snapshot.forEach(doc => {
-          cache[entity][doc.id] = doc.data();
+          cache[entity][doc.id] = clone(doc.data());
           data.push(cache[entity][doc.id]);
         });
       } else {
@@ -144,14 +144,14 @@
 
       if (params.limit === 1) {
         if (data.length === 1) {
-          return data[0];
+          return clone(data[0]);
         } else if (data.length === 0) {
           return null;
         } else {
-          return data;
+          return clone(data);
         }
       } else {
-        return data;
+        return clone(data);
       }
     };
 
@@ -165,17 +165,17 @@
 
       if (useCache) {
         snapshot.forEach(doc => {
-          cache[entity][doc.id] = doc.data();
+          cache[entity][doc.id] = clone(doc.data());
         });
 
-        return Object.values(cache[entity]);
+        return clone(Object.values(cache[entity]));
       } else {
         const data = [];
         snapshot.forEach(doc => {
           data.push(doc.data());
         });
 
-        return data;
+        return clone(data);
       }
     };
 
