@@ -5,8 +5,22 @@
 - `firebase-firestore-helper@^1.0.0` supports `firebase-admin@^8.0.0`
 - `firebase-firestore-helper@^2.0.0` supports `firebase-admin@^9.0.0`
 - `firebase-firestore-helper@^3.0.0` supports `firebase-admin@^10.0.0`
+- `firebase-firestore-helper@^4.0.0` supports `firebase-admin@^10.0.0`
 
 ## How to use it
+
+### Initializing the Helper
+
+In your `./src/index.js` file (or whatever is called your root file), initialize the helper by doing:
+
+```js
+const { initHelper } = require('firebase-firestore-helper');
+// import { initHelper } from 'firebase-firestore-helper';
+
+initHelper();
+```
+
+### Using the Helper
 
 When `.add` function is called, it **must** receive an `id` inside the object to save, which is the one is going to be used as document id.
 
@@ -59,8 +73,10 @@ Your folder tree should contain 3 important parts:
 |    |-> users
 |    |-> photos
 |    |-> ...
+|-> index.js
 ```
 
+- `index.js` will initialize the helper, by using `initHelper` function, just before you call `initializeApp` from `firebase-admin/app`
 - `db/users` will **expose** the object created by this library, which will handle the `users` collections in Firestore. You'll be able to override here.
 - `actions/users` will **use** the object exposed by `db/users`, and where you'll write all the business logic.
 - `app/*` is just the regular file where you are listeining for the `httpRequests`, which will user `actions/*` in order to handle business logic.
