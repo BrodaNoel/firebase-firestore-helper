@@ -1,5 +1,6 @@
 import { getFirestore } from 'firebase-admin/firestore';
-const firestore = getFirestore();
+
+let firestore;
 
 const clone = o => {
   try {
@@ -212,6 +213,10 @@ const clearCache =
       cache[entity] = {};
     }
   };
+
+export const initHelper = app => {
+  firestore = getFirestore(app);
+};
 
 export const helperCreator = ({ entity, useCache = true }) => {
   if (useCache && !cache[entity]) {
