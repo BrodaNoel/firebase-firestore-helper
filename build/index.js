@@ -4,7 +4,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["firebase-firestore-helper"] = {}, global.firestore$1));
 })(this, (function (exports, firestore$1) { 'use strict';
 
-  const firestore = firestore$1.getFirestore();
+  let firestore;
 
   const clone = o => {
     try {
@@ -218,6 +218,10 @@
       }
     };
 
+  const initHelper = app => {
+    firestore = firestore$1.getFirestore(app);
+  };
+
   const helperCreator = ({ entity, useCache = true }) => {
     if (useCache && !cache[entity]) {
       cache[entity] = {};
@@ -278,6 +282,7 @@
 
   exports.actionsHelperCreator = actionsHelperCreator;
   exports.helperCreator = helperCreator;
+  exports.initHelper = initHelper;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
