@@ -209,8 +209,12 @@
     };
 
   const clearCache =
-    ({ entity }) =>
+    ({ entity, useCache }) =>
     key => {
+      if (!useCache) {
+        return;
+      }
+
       if (key) {
         delete cache[entity][key];
       } else {
@@ -234,7 +238,7 @@
       getAll: getAll({ entity, useCache }),
       deleteById: deleteById({ entity, useCache }),
       editById: editById({ entity, useCache }),
-      clearCache: clearCache({ entity }),
+      clearCache: clearCache({ entity, useCache }),
     };
   };
 
