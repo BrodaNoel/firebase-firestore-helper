@@ -7,6 +7,7 @@
 - `firebase-firestore-helper@^3.0.0` supports `firebase-admin@^10.0.0`
 - `firebase-firestore-helper@^4.0.0` supports `firebase-admin@^10.0.0`
 - `firebase-firestore-helper@^5.0.0` supports `firebase-admin@^11.0.0`
+- `firebase-firestore-helper@^6.0.0` supports `firebase-admin@^12.0.0`
 
 ## How to use it
 
