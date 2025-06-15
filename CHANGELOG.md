@@ -1,3 +1,8 @@
+# 7.0.0
+
+- Support for `firebase-admin@^13.0.0`
+- Drop support for some NodeJS versions. Now we support >=18
+
 # 6.0.0
 
 - Support for `firebase-admin@^12.0.0`
