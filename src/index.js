@@ -119,6 +119,18 @@ const getBy =
       }
     }
 
+    if (params.select) {
+      if (typeof params.select === 'string') {
+        // { select: 'createdAt' }
+        query = query.select(params.select);
+      } else if (Array.isArray(params.select)) {
+        // { select: ['createdAt', 'id'] }
+        query = query.select(...params.select);
+      } else {
+        throw new Error('Incorrect shape on params.select');
+      }
+    }
+
     if (params.limit) {
       query = query.limit(params.limit);
     }
