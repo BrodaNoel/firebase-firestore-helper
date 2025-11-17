@@ -224,6 +224,10 @@ db.getBy({ where: [{ age: 10 }, ['status', '>=', 2]] });
 // This will return `null` or and `object` (because of limit === 1)
 db.getBy({ where: { username: 'BrodaNoel' }, limit: 1 });
 
+// Select just some parts of the resulting object (SQL: SELECT id, name, FROM...)
+db.getBy({ where: { age: 10 }, select: 'id' });
+db.getBy({ where: { age: 10 }, select: ['id', 'name'] });
+
 // Add orders
 db.getBy({ where: { age: 10 }, orderBy: 'createdAt' });
 db.getBy({ where: { age: 10 }, orderBy: ['createdAt', 'desc'] });
